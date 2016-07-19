@@ -4,7 +4,10 @@
     var viewModel = {
         username: (function () {
             var value = ko.observable();
-
+			value.trim = function() {
+                value(ko.utils.unwrapObservable(value).trim());
+            };
+			
             value.isValid = ko.computed(function () {
                 return value() && value().length;
             });
@@ -13,7 +16,10 @@
         })(),
         email: (function () {
             var value = ko.observable();
-
+			value.trim = function() {
+                value(ko.utils.unwrapObservable(value).trim());
+            };
+			
             value.isValid = ko.computed(function () {
                 return value() && constants.patterns.email.test(value());
             });

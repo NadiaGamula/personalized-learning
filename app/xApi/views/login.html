@@ -10,7 +10,7 @@
             <div class="form-row" data-bind="css: { error: !username.isValid() && showError() }">
                 <div class="form-control-wrapper">
 
-                    <input class="form-control" type="text" data-bind="value: username, valueUpdate: 'afterkeydown', css: { empty: !username() }" />
+                    <input class="form-control" type="text" data-bind="value: username, valueUpdate: 'afterkeydown', css: { empty: !username() }, event: { blur: username.trim }" />
                     <div class="placeholder">
                         <span data-translate-text="[tracking and tracing name field]"></span>
                     </div>
@@ -19,7 +19,7 @@
             </div>
             <div class="form-row" data-bind="css: { error: !email.isValid() && showError() }">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="email" data-bind="value: email, valueUpdate: 'afterkeydown', css: { empty: !email() } " />
+                    <input class="form-control" type="email" data-bind="value: email, valueUpdate: 'afterkeydown', css: { empty: !email() }, event: { blur: email.trim }" />
                     <div class="placeholder">
                         <span data-translate-text="[tracking and tracing email field]"></span>
                     </div>
