@@ -1,6 +1,6 @@
 ﻿define(['_', 'entities/Question'], function (_, Question) {
 
-    var TextMatching = function (id, title, type, answers) {
+    var TextMatching = function (id, shortId, title, type, answers) {
         var that = this,
             _protected = {
                 answer: answer,
@@ -8,7 +8,7 @@
                 getProgress: getProgress
             };
 
-        Question.call(that, id, title, type, _protected);
+        Question.call(that, id, shortId, title, type, _protected);
         that.answers = answers;
         var checkedAnswers = null;
 
@@ -28,7 +28,7 @@
         }
 
         function restoreProgress(progress) {
-            if (progress == 100) {
+            if (progress === 100) {
                 _.each(that.answers, function (answer) {
                     answer.attemptedValue = answer.value;
                     that.score = 100;
@@ -36,7 +36,11 @@
                 return;
             }
             _.each(progress, function(progressItem, index) {
-                that.answers[index].attemptedValue = progressItem.value;
+                if (!_.isNull(that.answers[index])
+                    && !_.isUndefined(that.answers[index])
+                    && progressItem.value) {
+                    that.answers[index].attemptedValue = progressItem.value;
+                }
             });
         }
         function getProgress() {

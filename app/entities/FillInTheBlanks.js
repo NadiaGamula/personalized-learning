@@ -1,6 +1,6 @@
 ﻿define(['_', 'entities/Question'], function (_, Question) {
 
-    var ctor = function (id, title, type, answers) {
+    var ctor = function (id, shortId, title, type, answers) {
         var that = this,
             _protected = {
                 answer: answer,
@@ -8,7 +8,7 @@
                 getProgress: getProgress
             };
         var submittedAnswers = null;
-        Question.call(that, id, title, type, _protected);
+        Question.call(that, id, shortId, title, type, _protected);
 
         that.answers = answers;
 
@@ -24,7 +24,7 @@
             that.score = hasMistakes ? 0 : 100;
         };
         function restoreProgress(progress) {
-            if (progress == 100) {
+            if (progress === 100) {
                 that.score = 100;
                 _.each(that.answers, function (answer) {
                     answer.submittedAnswer = answer.text;
@@ -33,10 +33,13 @@
             }
             else {
                 _.each(that.answers, function (answer) {
-                    answer.submittedAnswer = _.find(progress, function (progressItem) {
-                        return answer.groupId == progressItem.groupId
-                    }).text;
+                    var answered = _.find(progress, function(progressItem) {
+                        return answer.groupId === progressItem.groupId;
+                    });
 
+                    if (!_.isNull(answered) && !_.isUndefined(answered) && answered.text) {
+                        answer.submittedAnswer = answered.text;
+                    }
                 });
             }
         }

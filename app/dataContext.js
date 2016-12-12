@@ -14,10 +14,10 @@
 
      'Q',
      '_',
-     'plugins/http'],
+     'plugins/http', 'publishSettings'],
 
      function (course, Section, Multipleselect, FillInTheBlanks, DragAndDrop, Singleselect, SingleselectImage,
-         TextMatching, Statement, Hotspot, ScenarioQuestion, RankingText, constants, Q, _, http) {
+         TextMatching, Statement, Hotspot, ScenarioQuestion, RankingText, constants, Q, _, http, publishSettings) {
          'use strict';
 
          return {
@@ -34,6 +34,8 @@
                  cache: false
              }).done(function (response) {
                  var promises = [];
+                
+                 var questionShortIds = publishSettings.questionShortIds || {};
 
                  course.id = response.id;
                  course.templateId = response.templateId,
@@ -47,7 +49,7 @@
                          var question;
                          switch (dq.type) {
                              case constants.questionTypes.multipleSelect:
-                                 question = new Multipleselect(dq.id, dq.title, dq.type, dq.isSurvey, dq.answers);
+                                 question = new Multipleselect(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.isSurvey, dq.answers);
                                  break;
                              case constants.questionTypes.fillInTheBlank:
                                  var answers = [];
@@ -63,31 +65,31 @@
                                          }
                                      });
                                  });
-                                 question = new FillInTheBlanks(dq.id, dq.title, dq.type, answers);
+                                 question = new FillInTheBlanks(dq.id, questionShortIds[dq.id], dq.title, dq.type, answers);
                                  break;
                              case constants.questionTypes.dragAndDrop:
-                                 question = new DragAndDrop(dq.id, dq.title, dq.type, dq.background, dq.dropspots);
+                                 question = new DragAndDrop(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.background, dq.dropspots);
                                  break;
                              case constants.questionTypes.singleSelectText:
-                                 question = new Singleselect(dq.id, dq.title, dq.type, dq.isSurvey, dq.answers);
+                                 question = new Singleselect(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.isSurvey, dq.answers);
                                  break;
                              case constants.questionTypes.singleSelectImage:
-                                 question = new SingleselectImage(dq.id, dq.title, dq.type, dq.answers, dq.correctAnswerId);
+                                 question = new SingleselectImage(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.answers, dq.correctAnswerId);
                                  break;
                              case constants.questionTypes.textMatching:
-                                 question = new TextMatching(dq.id, dq.title, dq.type, dq.answers, dq.correctAnswerId);
+                                 question = new TextMatching(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.answers, dq.correctAnswerId);
                                  break;
                              case constants.questionTypes.statement:
-                                 question = new Statement(dq.id, dq.title, dq.type, dq.isSurvey, dq.answers);
+                                 question = new Statement(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.isSurvey, dq.answers);
                                  break;
                              case constants.questionTypes.hotspot:
-                                 question = new Hotspot(dq.id, dq.title, dq.type, dq.isMultiple, dq.background, dq.spots);
+                                 question = new Hotspot(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.isMultiple, dq.background, dq.spots);
                                  break;
                              case constants.questionTypes.scenario:
-                                 question = new ScenarioQuestion(dq.id, dq.title, dq.type, dq.projectId, dq.embedCode, dq.masteryScore);
+                                 question = new ScenarioQuestion(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.projectId, dq.embedCode, dq.masteryScore);
                                  break;
                              case constants.questionTypes.rankingText:
-                                 question = new RankingText(dq.id, dq.title, dq.type, dq.answers);
+                                 question = new RankingText(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.answers);
                                  break;
                              default:
                                  return undefined;

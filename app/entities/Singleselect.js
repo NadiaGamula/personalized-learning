@@ -1,6 +1,6 @@
 ﻿define(['_', 'entities/Question'], function (_, Question) {
 
-    var ctor = function (id, title, type, isSurvey, answers) {
+    var ctor = function (id, shortId, title, type, isSurvey, answers) {
         var that = this,
             _protected = {
                 answer: answer,
@@ -8,7 +8,7 @@
                 getProgress: getProgress
             };
 
-        Question.call(that, id, title, type, _protected, isSurvey);
+        Question.call(that, id, shortId, title, type, _protected, isSurvey);
 
         that.answers = answers;
         var checkedAnswers = null;
@@ -32,12 +32,12 @@
 
         function restoreProgress(progress) {
             _.each(that.answers, function (answer) {
-                if (answer.isCorrect && progress == 100) {
+                if (answer.isCorrect && progress === 100) {
                     that.score = 100;
                     answer.isChecked = true;
                 } else {
                     if (_.find(progress, function (progressItem) {
-                        return progressItem == answer.id;
+                        return progressItem === answer.id;
                     })) {
                         answer.isChecked = true;
                     };
@@ -46,7 +46,7 @@
         }
 
         function getProgress() {
-            if (this.score == 100) {
+            if (this.score === 100) {
                 return 100;
             } else {
                 return checkedAnswers;

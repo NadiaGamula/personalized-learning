@@ -1,6 +1,6 @@
 ﻿define(['_', 'entities/Question'], function (_, Question) {
 
-    var RankingText = function (id, title, type, answers) {
+    var RankingText = function (id, shortId, title, type, answers) {
         var that = this,
             _protected = {
                 answer: answer,
@@ -8,7 +8,7 @@
                 getProgress: getProgress
             };
 
-        Question.call(that, id, title, type, _protected);
+        Question.call(that, id, shortId, title, type, _protected);
 
         that.correctOrder = _.map(answers, function (item) {
             return {
@@ -31,12 +31,16 @@
                 that.score = 100;
                 return;
             }
-            that.rankingItems = _.map(progress, function (item) {
-                return {
-                    text: item
-                };
-            });
-
+            var pattern = _.pluck(that.correctOrder, 'text');
+            if (pattern.length === progress.length
+                && _.intersection(pattern, progress).length === pattern.length) {
+                that.rankingItems = _.map(progress, function (item) {
+                    return {
+                        text: item
+                    };
+                });
+            }
+            
             that.score = 0;
         }
         function getProgress() {

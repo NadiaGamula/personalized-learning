@@ -1,6 +1,6 @@
 ﻿define(['_', 'entities/Question'], function (_, Question) {
 
-    var ctor = function (id, title, type, projectId, embedCode, masteryScore) {
+    var ctor = function (id, shortId, title, type, projectId, embedCode, masteryScore) {
         var that = this,
             _protected = {
                 answer: answer,
@@ -8,7 +8,7 @@
                 getProgress: getProgress
             };
 
-        Question.call(that, id, title, type, _protected);
+        Question.call(that, id, shortId, title, type, _protected);
 
         that.embedCode = embedCode;
 
@@ -22,7 +22,7 @@
 
         function restoreProgress(progress) {
             if (!_.isNaN(progress)) {
-                that.score = progress;
+                that.score = (progress === 100) ? progress : 0;
             }
         }
 

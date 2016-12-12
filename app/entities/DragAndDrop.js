@@ -1,6 +1,6 @@
 ﻿define(['_', 'entities/Question'], function (_, Question) {
 
-    var ctor = function (id, title, type, background, dropspots) {
+    var ctor = function (id, shortId, title, type, background, dropspots) {
         var that = this,
             _protected = {
                 answer: answer,
@@ -8,7 +8,7 @@
                 getProgress: getProgress
             };
 
-        Question.call(that, id, title, type, _protected);
+        Question.call(that, id, shortId, title, type, _protected);
 
         that.background = background;
         that.dropspots = dropspots;
@@ -31,7 +31,7 @@
         function restoreProgress(progress) {
             _.each(that.dropspots, function (spot) {
                 spot.placed = _.find(progress.masteredSpots, function(masteredSpot) {
-                     return masteredSpot.x == spot.x && masteredSpot.y == spot.y;
+                     return masteredSpot.x === spot.x && masteredSpot.y === spot.y;
                 });
             });
 

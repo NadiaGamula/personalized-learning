@@ -1,10 +1,9 @@
 ﻿define(['eventManager'], function (eventManager) {
     "use strict";
-    var index = 0;
 
-    var ctor = function (id, title, type, _protected, isSurvey) {
+    var ctor = function (id, shortId, title, type, _protected, isSurvey) {
         var that = this;
-        that.shortId = index++;
+        that.shortId = shortId;
         that.id = id;
         that.title = title;
         that.type = type;

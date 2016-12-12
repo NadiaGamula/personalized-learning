@@ -34,7 +34,6 @@
 
                 app.on('progress:error').then(showProgressError);
                 var progress = progressContext.get();
-
                 if (_.isObject(progress)) {
                     if (_.isObject(progress.answers)) {
                         _.each(course.sections, function (section) {
