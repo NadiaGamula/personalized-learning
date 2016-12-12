@@ -44,12 +44,19 @@
 
                  _.each(response.sections, function (dobj) {
                      var section = new Section(dobj.id, dobj.title);
-
+                        
                      _.each(dobj.questions, function (dq) {
+                         var spec = {
+                            id: dq.id,
+                            shortId: questionShortIds[dq.id],
+                            title: dq.title,
+                            type: dq.type
+                         };
                          var question;
+
                          switch (dq.type) {
                              case constants.questionTypes.multipleSelect:
-                                 question = new Multipleselect(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.isSurvey, dq.answers);
+                                 question = new Multipleselect(spec, dq.isSurvey, dq.answers);
                                  break;
                              case constants.questionTypes.fillInTheBlank:
                                  var answers = [];
@@ -65,31 +72,31 @@
                                          }
                                      });
                                  });
-                                 question = new FillInTheBlanks(dq.id, questionShortIds[dq.id], dq.title, dq.type, answers);
+                                 question = new FillInTheBlanks(spec, answers);
                                  break;
                              case constants.questionTypes.dragAndDrop:
-                                 question = new DragAndDrop(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.background, dq.dropspots);
+                                 question = new DragAndDrop(spec, dq.background, dq.dropspots);
                                  break;
                              case constants.questionTypes.singleSelectText:
-                                 question = new Singleselect(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.isSurvey, dq.answers);
+                                 question = new Singleselect(spec, dq.isSurvey, dq.answers);
                                  break;
                              case constants.questionTypes.singleSelectImage:
-                                 question = new SingleselectImage(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.answers, dq.correctAnswerId);
+                                 question = new SingleselectImage(spec, dq.answers, dq.correctAnswerId);
                                  break;
                              case constants.questionTypes.textMatching:
-                                 question = new TextMatching(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.answers, dq.correctAnswerId);
+                                 question = new TextMatching(spec, dq.answers, dq.correctAnswerId);
                                  break;
                              case constants.questionTypes.statement:
-                                 question = new Statement(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.isSurvey, dq.answers);
+                                 question = new Statement(spec, dq.isSurvey, dq.answers);
                                  break;
                              case constants.questionTypes.hotspot:
-                                 question = new Hotspot(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.isMultiple, dq.background, dq.spots);
+                                 question = new Hotspot(spec, dq.isMultiple, dq.background, dq.spots);
                                  break;
                              case constants.questionTypes.scenario:
-                                 question = new ScenarioQuestion(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.projectId, dq.embedCode, dq.masteryScore);
+                                 question = new ScenarioQuestion(spec, dq.projectId, dq.embedCode, dq.masteryScore);
                                  break;
                              case constants.questionTypes.rankingText:
-                                 question = new RankingText(dq.id, questionShortIds[dq.id], dq.title, dq.type, dq.answers);
+                                 question = new RankingText(spec, dq.answers);
                                  break;
                              default:
                                  return undefined;

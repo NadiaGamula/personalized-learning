@@ -1,6 +1,6 @@
 ﻿define(['_', 'entities/Question'], function (_, Question) {
 
-    var TextMatching = function (id, shortId, title, type, answers) {
+    var TextMatching = function (spec, answers) {
         var that = this,
             _protected = {
                 answer: answer,
@@ -8,7 +8,7 @@
                 getProgress: getProgress
             };
 
-        Question.call(that, id, shortId, title, type, _protected);
+        Question.call(that, spec, _protected);
         that.answers = answers;
         var checkedAnswers = null;
 

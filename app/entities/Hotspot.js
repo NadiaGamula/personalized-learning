@@ -1,6 +1,6 @@
 ﻿define(['_', 'entities/Question'], function (_, Question) {
 
-    var ctor = function (id, shortId, title, type, isMultiple, background, spots) {
+    var ctor = function (spec, isMultiple, background, spots) {
         var that = this,
             _protected = {
                 answer: answer,
@@ -8,7 +8,7 @@
                 getProgress: getProgress
             };
 
-        Question.call(that, id, shortId, title, type, _protected);
+        Question.call(that, spec, _protected);
 
         that.isMultiple = isMultiple;
         that.background = background;
