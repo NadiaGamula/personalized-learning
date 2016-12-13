@@ -30,14 +30,11 @@ function (ko, app, activator, studyadvice, readings, course) {
     }
 
     function isQuestionInSection(sectionId, questionId) {
-        var section = _.find(course.sections, function (section) { return section.id === sectionId; });
-        if (_.isNull(section) || _.isUndefined(section)) {
-            return false;
+        for (var i = 0; i < course.sections.length; i++) {
+            if (course.sections[i].id === sectionId) {
+                return !!_.find(course.sections[i].questions, function(question) { return question.id === questionId; });
+            }
         }
-        var question = _.find(section.questions, function (question) { return question.id === questionId; });
-        if (_.isNull(question) || _.isUndefined(question)) {
-            return false;
-        }
-        return true;
+        return false;
     }
 });
